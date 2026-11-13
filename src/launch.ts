@@ -62,10 +62,6 @@ export class Launch {
     this.delayOffset = 0;
   }
 
-  scrub() {
-    this.time = new Date(this.originalTime.getTime() + 1000 * 60 * 60 * 24);
-  }
-
   recycle(t: number = 60) {
     this.time = new Date(new Date().getTime() + 1000 * t);
     if (this.holdStarted != null) {

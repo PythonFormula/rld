@@ -18,6 +18,7 @@ function Timer(time: Date, leadChar: string = "T"): string {
 
 function App() {
   const [launch, setLaunch] = useState<Launch | null>(null);
+  const [altLaunch, setAltLaunch] = useState<Launch | null>(null);
   const [, setTick] = useState(0);
 
   useEffect(() => {
@@ -33,53 +34,83 @@ function App() {
         </h1>
       </div>
       <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="input-group">
-            <input
-              type="file"
-              className="form-control"
-              accept=".yaml,.yml,application/x-yaml,text/yaml"
-              onChange={async (e) => {
-                const file = e.target.files?.[0];
-                if (!file) return;
-                setLaunch(new Launch(await file.text()));
-              }}
-            />
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => launch?.toggleHold()}
-            >
-              Hold
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => launch?.scrub()}
-            >
-              Scrub
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => launch?.recycle()}
-            >
-              Recycle (T-60)
-            </button>
-            <label htmlFor="delay" className="input-group-text">
-              Stream delay
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="delay"
-              style={{ maxWidth: "10rem" }}
-              autoComplete="off"
-              onChange={(e) => {
-                if (launch) launch.delayOffset = Number(e.target.value);
-              }}
-            />
-          </div>
+        <div className="input-group w-auto">
+          <button
+            type="button"
+            className="btn-solid"
+            onClick={() => launch?.toggleHold()}
+          >
+            Hold
+          </button>
+          <button
+            type="button"
+            className="btn-solid"
+            disabled={altLaunch == null}
+            onClick={() => {
+              const p = document.getElementById(
+                "launch-file-input",
+              ) as HTMLInputElement;
+              const a = document.getElementById(
+                "alt-launch-file-input",
+              ) as HTMLInputElement;
+              p.files = a.files;
+              a.value = "";
+              setLaunch(altLaunch);
+              setAltLaunch(null);
+            }}
+          >
+            Scrub
+          </button>
+          <button
+            type="button"
+            className="btn-solid"
+            onClick={() => launch?.recycle()}
+          >
+            Recycle (T-60)
+          </button>
+          <label htmlFor="delay" className="input-group-text">
+            Stream delay
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="delay"
+            style={{ maxWidth: "10rem" }}
+            autoComplete="off"
+            onChange={(e) => {
+              if (launch) launch.delayOffset = Number(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col">Primary launch file</div>
+        <div className="col">Alternative launch file</div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="input-group">
+          <input
+            type="file"
+            id="launch-file-input"
+            className="form-control"
+            accept=".yaml,.yml,application/x-yaml,text/yaml"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setLaunch(new Launch(await file.text()));
+            }}
+          />
+          <input
+            type="file"
+            id="alt-launch-file-input"
+            className="form-control"
+            accept=".yaml,.yml,application/x-yaml,text/yaml"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setAltLaunch(new Launch(await file.text()));
+            }}
+          />
         </div>
       </div>
       <div className="row">
