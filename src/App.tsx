@@ -89,6 +89,7 @@ function App() {
               <th scope="col">Time</th>
               <th scope="col">Event</th>
               <th scope="col">Status</th>
+              <th scope="col">Clock</th>
             </tr>
           </thead>
           <tbody>
@@ -105,6 +106,11 @@ function App() {
                   <td>{e.name}</td>
                   <td>
                     {Timer(new Date(launch.getTime().getTime() + e.time))}
+                  </td>
+                  <td>
+                    {new Date(
+                      launch.getTime().getTime() + e.time,
+                    ).toLocaleString()}
                   </td>
                 </tr>
               ))
