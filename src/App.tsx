@@ -33,7 +33,7 @@ function App() {
         </h1>
       </div>
       <div className="row justify-content-center">
-        <div className="col-auto">
+        <div className="col-md-8">
           <div className="input-group">
             <input
               type="file"
@@ -73,6 +73,7 @@ function App() {
               type="number"
               className="form-control"
               id="delay"
+              style={{ maxWidth: "10rem" }}
               autoComplete="off"
               onChange={(e) => {
                 if (launch) launch.delayOffset = Number(e.target.value);
