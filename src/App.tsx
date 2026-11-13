@@ -38,7 +38,8 @@ function App() {
           <button
             type="button"
             className="btn-solid"
-            onClick={() => launch?.toggleHold()}
+            disabled={launch == null}
+            onClick={() => launch!.toggleHold()}
           >
             Hold
           </button>
@@ -64,9 +65,30 @@ function App() {
           <button
             type="button"
             className="btn-solid"
-            onClick={() => launch?.recycle()}
+            disabled={launch == null}
+            onClick={() => launch!.recycle()}
           >
             Recycle (T-60)
+          </button>
+          <button
+            type="button"
+            className="btn-solid"
+            disabled={launch == null}
+            onClick={() =>
+              (launch!.time = new Date(launch!.time.getTime() + 1000))
+            }
+          >
+            +1s
+          </button>
+          <button
+            type="button"
+            className="btn-solid"
+            disabled={launch == null}
+            onClick={() =>
+              (launch!.time = new Date(launch!.time.getTime() - 1000))
+            }
+          >
+            -1s
           </button>
           <label htmlFor="delay" className="input-group-text">
             Stream delay
