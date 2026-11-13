@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { Launch } from "./launch";
 
-function NumToTOffset(num: number): string {
+function NumToTOffset(num: number, leadChar: string = "T"): string {
   const sign = num >= 0 ? "+" : "-";
   num = Math.abs(num);
   const seconds = Math.floor(num / 1000);
   const pad = (n: number) => String(n).padStart(2, "0");
-  return `T${sign}${pad(Math.floor(seconds / 3600))}:${pad(Math.floor((seconds % 3600) / 60))}:${pad(seconds % 60)}`;
+  return `${leadChar}${sign}${pad(Math.floor(seconds / 3600))}:${pad(Math.floor((seconds % 3600) / 60))}:${pad(seconds % 60)}`;
 }
 
-function Timer(time: Date): string {
+function Timer(time: Date, leadChar: string = "T"): string {
   const now = new Date().getTime();
   const launch = time.getTime();
   const diff = Math.abs(now - launch);
-  return NumToTOffset(launch < now ? diff : -diff);
+  return NumToTOffset(launch < now ? diff : -diff, leadChar);
 }
 
 function App() {
@@ -105,7 +105,7 @@ function App() {
                   <td>{NumToTOffset(e.time)}</td>
                   <td>{e.name}</td>
                   <td>
-                    {Timer(new Date(launch.getTime().getTime() + e.time))}
+                    {Timer(new Date(launch.getTime().getTime() + e.time), "")}
                   </td>
                   <td>
                     {new Date(
