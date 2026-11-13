@@ -86,10 +86,10 @@ function App() {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Time</th>
+              <th scope="col">T+/-</th>
               <th scope="col">Event</th>
-              <th scope="col">Status</th>
-              <th scope="col">Clock</th>
+              <th scope="col">Countdown</th>
+              <th scope="col">Local time</th>
             </tr>
           </thead>
           <tbody>
